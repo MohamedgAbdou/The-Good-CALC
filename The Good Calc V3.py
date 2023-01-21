@@ -1,22 +1,12 @@
-import re
+from sympy import *
 
 def calculate(expression):
-    match = re.search("(\d+\.?\d*)\s*([+\-*/])\s*(\d+\.?\d*)", expression)
-    if match:
-        num1, operator, num2 = match.groups()
-        num1, num2 = float(num1), float(num2)
-        if operator == '+':
-            return num1 + num2
-        elif operator == '-':
-            return num1 - num2
-        elif operator == '*':
-            return num1 * num2
-        elif operator == '/':
-            if num2 == 0:
-                return "invalid input"
-            return num1 / num2
-    else:
+    try:
+        parsed_expression = parse_expr(expression)
+        result = parsed_expression.evalf()
+    except:
         return "invalid input"
+    return result
 
 while True:
     expression = input("Enter calculation: ")
